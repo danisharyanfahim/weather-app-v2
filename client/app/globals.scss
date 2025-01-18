@@ -1,0 +1,228 @@
+// @use "./graphs.scss";
+// @use "./weather-card.scss";
+
+@font-face {
+  font-family: paragraph;
+  src: url("/static/fonts/IBMPlexSans-Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: subtitle;
+  src: url("/static/fonts/IBMPlexSans-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: title;
+  src: url("/static/fonts/IBMPlexSans-Bold.ttf") format("truetype");
+}
+
+p {
+  font-family: paragraph, sans-serif;
+}
+
+h1 {
+  font-family: title, sans-serif;
+  font-size: 3.5rem;
+}
+
+h2,
+h3,
+h4 {
+  font-family: subtitle, sans-serif;
+}
+
+* {
+  position: relative;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  color: rgb(0, 0, 0);
+}
+
+body {
+  -ms-overflow-style: none;
+
+  // scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none; //Hides scrollbar for Chrome, Safari and Opera
+  }
+}
+
+input {
+  outline: none;
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100px;
+  font-family: paragraph, sans-serif;
+  color: black;
+
+  &:is(:-webkit-autofill, :autofill, :-moz-placeholder) {
+    background-color: transparent !important;
+    color: inherit !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+}
+
+button {
+  background-color: transparent;
+  border: 0px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: white;
+  background: blue;
+
+  &:hover {
+    transform: scale(108%);
+    transition: all 0.15s;
+  }
+}
+
+.loading-icon-container {
+  font-size: 5rem;
+
+  #loading-icon {
+    animation: spinClockwise 1s linear infinite;
+  }
+}
+
+/*spin clockwise*/
+@keyframes spinClockwise {
+  0% {
+    transform: rotateZ(0deg);
+  }
+
+  50% {
+    transform: rotateZ(180deg);
+  }
+
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+.main-container {
+  margin: 1rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  color: white;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  padding: 1rem 0rem;
+  box-shadow: 0rem 0rem 10px 0rem rgba(0, 0, 0, 0.3);
+
+  > * {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 0rem 1rem;
+    margin: 2rem 0rem;
+    filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.4));
+  }
+
+  .weather-container {
+    font-size: 1.5rem;
+    #weather-icon-current {
+      font-size: 8rem;
+      display: flex;
+    }
+  }
+
+  .temp-container {
+    #main-temp {
+      font-size: 3rem;
+    }
+  }
+
+  .info-container {
+    #current-location {
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    #current-time {
+      font-size: 1.75rem;
+    }
+  }
+}
+
+.secondary-container {
+  background-color: blueviolet;
+  margin: 1rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  color: white;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); // Creates two equal columns
+  grid-auto-rows: 1fr; //Min height of 1 row for each item in the grid
+  grid-template-rows: auto; // Rows will adjust based on content
+  gap: 1rem;
+  padding: 1rem;
+  box-shadow: 0rem 0rem 10px 0rem rgba(0, 0, 0, 0.3);
+
+  & > :nth-child(-n + 4) {
+    // Your styles for the first 4 elements
+    aspect-ratio: 1 / 1;
+  }
+
+  // Every item after the first should occupy its own row
+  & > :nth-child(n + 5) {
+    grid-column: span 2; // Each item takes up only 1 column
+    grid-row: auto; // Automatically adjusts the rows based on the content
+  }
+
+  > * {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0rem 1rem;
+    filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.4));
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 0.66rem;
+  }
+}
+
+.hourly-forecast-container {
+  background-color: blueviolet;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  overflow-x: scroll;
+  box-shadow: 0rem 0rem 10px 0rem rgba(0, 0, 0, 0.3);
+
+  ul li {
+    list-style-type: none;
+  }
+  .hourly-forecast {
+    display: flex;
+  }
+}
+
+.daily-forecast-container {
+  background-color: blueviolet;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  overflow-x: scroll;
+  box-shadow: 0rem 0rem 10px 0rem rgba(0, 0, 0, 0.3);
+
+  li {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+}
