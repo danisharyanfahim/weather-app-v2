@@ -365,19 +365,19 @@ const WeatherDashboard = ({
 
                   return (
                     <li key={index}>
-                      <p>{date}</p>
+                      <p className="day">{index === 0 ? "Today" : date}</p>
                       {/* <p>
                         {Math.round(day.temp.day)}
                         {tempUnit}
                       </p> */}
 
-                      <p>
+                      {/* <p>
                         <GiWaterDrop /> {day.humidity}%
-                      </p>
-                      <p>
+                      </p> */}
+                      <p className="precipitation">
                         <TbDropletsFilled /> {Math.round(day.pop * 100)}%
                       </p>
-                      <div>
+                      <div className="weather">
                         {selectWeatherIcon(
                           day.weather[0].main,
                           day.dt,
@@ -386,8 +386,8 @@ const WeatherDashboard = ({
                           false
                         )}
                       </div>
-                      <p>{Math.round(day.temp.max)}°</p>
-                      <p>{Math.round(day.temp.min)}°</p>
+                      <p className="temp">{Math.round(day.temp.max)}°</p>
+                      <p className="temp">{Math.round(day.temp.min)}°</p>
                       {/* <p>{formatCamelCase(day.weather[0].description)}</p> */}
                     </li>
                   );

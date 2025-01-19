@@ -207,7 +207,9 @@ button {
     list-style-type: none;
   }
   .hourly-forecast {
+    width: 100%;
     display: flex;
+    justify-content: space-between;
   }
 }
 
@@ -224,5 +226,25 @@ button {
     display: flex;
     justify-content: space-between;
     gap: 0.5rem;
+
+    .temp {
+      width: 15%;
+    }
+
+    .weather {
+      width: 10%;
+    }
+    .precipitation {
+      width: 25%;
+      font-size: 0.8rem;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .day {
+      width: 35%;
+    }
   }
 }
