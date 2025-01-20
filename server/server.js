@@ -9,7 +9,7 @@ let prevLocation, prevImageUrl;
 
 app.use(cors());
 app.use(express.json())
-app.use("/", async (req, res) => {
+app.use("/api", async (req, res) => {
   const { location, units } = req.query;
   if (location !== prevLocation) { 
     prevLocation = location;

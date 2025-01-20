@@ -64,6 +64,16 @@ export const formatLocationName = (city: string): string => {
   return removeAccents(city);
 };
 
+export const removeAfterHyphen = (text: string): string => {
+  const match = text.search(/[_]/);
+
+  if (match !== -1) {
+    return text.slice(0, match);
+  } else {
+    return text;
+  }
+};
+
 export const getCurrentTime = (timeZone: number): string => {
   const now = new Date().getTime() / 1000;
   return formatTime(now, timeZone, true);

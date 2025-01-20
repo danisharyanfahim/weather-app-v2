@@ -1,13 +1,21 @@
 import React from "react";
 
-const LineGraph = ({ data }: { data: number[] }) => {
+const LineGraph = ({
+  data,
+  graphWidth,
+  graphHeight,
+  padding = { x: 10, y: 10 },
+  id,
+}: {
+  data: number[];
+  graphWidth: number;
+  graphHeight: number;
+  padding?: { x: number; y: number };
+  id: string;
+}) => {
   //Get highest and lowest values in the data array
   //Find the difference between the highest and lowest values
   //
-
-  const width = 2000; // Graph width
-  const height = 300; // Graph height
-  const padding = 10; // Padding around the graph
 
   // Find the minimum and maximum values in the data
   const minValue = Math.min(...data);
@@ -15,31 +23,37 @@ const LineGraph = ({ data }: { data: number[] }) => {
 
   // If the data has only one point, we can't scale the graph properly, so we just set the same Y value for all points
   const scaleY =
-    maxValue === minValue ? 1 : (height - 2 * padding) / (maxValue - minValue);
-  const scaleX = (width - 2 * padding) / (data.length - 1);
+    maxValue === minValue
+      ? 1
+      : (graphHeight - 2 * padding.y) / (maxValue - minValue);
+  const scaleX = (graphWidth - 2 * padding.x) / (data.length - 1);
 
   // Generate the points for the polyline element
   const points = data
     .map((value, index) => {
-      const x = padding + index * scaleX;
-      const y = height - padding - (value - minValue) * scaleY; // Adjust the Y coordinate based on min and max values
+      const x = padding.x + index * scaleX;
+      const y = graphHeight - padding.y - (value - minValue) * scaleY; // Adjust the Y coordinate based on min and max values
       return `${x},${y}`;
     })
     .join(" ");
 
   return (
-    <div className="line-graph">
-      <svg width={width} height={height}>
+    <div
+      className="line-graph"
+      style={{ "--graph-width": graphWidth + "px" }}
+      id={id}
+    >
+      <svg width={graphWidth} height={graphHeight}>
         <polyline
           strokeLinecap="round"
           points={points}
           fill="none"
-          stroke="blue"
+          stroke="var(--line-graph-color)"
           strokeWidth="3"
         />
         {data.map((value, index) => {
-          const x = padding + index * scaleX;
-          const y = height - padding - (value - minValue) * scaleY; // Calculate the Y position for each point
+          const x = padding.x + index * scaleX;
+          const y = graphHeight - padding.y - (value - minValue) * scaleY; // Calculate the Y position for each point
           return (
             <circle
               key={index}
@@ -47,7 +61,7 @@ const LineGraph = ({ data }: { data: number[] }) => {
               cy={y}
               r={3} // Radius of the circle
               fill="white" // Fill color for the circles
-              stroke="blue"
+              stroke="var(--line-graph-color)"
               strokeWidth="1"
             />
           );

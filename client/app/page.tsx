@@ -1,5 +1,5 @@
 import React from "react";
-import WeatherDashboard from "./components/weather-dashboard";
+import WeatherDashboard from "./components/weather-dashboard/weather-dashboard";
 
 const WeatherApp = async ({
   searchParams,
@@ -8,13 +8,11 @@ const WeatherApp = async ({
 }) => {
   const { location, units } = await searchParams;
   return (
-    <div>
-      <WeatherDashboard
-        location={location}
-        units={units}
-        defaultLocation="Toronto"
-      />
-    </div>
+    <WeatherDashboard
+      location={location}
+      units={units}
+      defaultLocation="Toronto"
+    />
   );
 };
 
