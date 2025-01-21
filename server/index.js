@@ -1,14 +1,14 @@
 require("dotenv").config();
 const express = require('express');
 const app = express();
-const cors = require('cors');
+// const cors = require('cors');
 const serverless = require('serverless-http')
 // const PORT = process.env.PORT || 4000;
 const weatherKey = process.env.OPEN_WEATHER_API_KEY;
 const googleKey = process.env.GOOGLE_PLACES_API_KEY;
 let prevLocation, prevImageUrl;
 
-app.use(cors());
+// app.use(cors());
 app.use(express.json())
 app.use("/api", async (req, res) => {
   const { location, units } = req.query;
