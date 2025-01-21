@@ -1,5 +1,7 @@
 import React from "react";
 import WeatherDashboard from "./components/weather-dashboard/weather-dashboard";
+import Header from "./components/header";
+import UnitContextProvider from "./context/unit-provider";
 
 const WeatherApp = async ({
   searchParams,
@@ -8,11 +10,16 @@ const WeatherApp = async ({
 }) => {
   const { location, units } = await searchParams;
   return (
-    <WeatherDashboard
-      location={location}
-      units={units}
-      defaultLocation="Toronto"
-    />
+    <main className="weather-app">
+      <UnitContextProvider>
+        <Header />
+        <WeatherDashboard
+          location={location}
+          units={units}
+          defaultLocation="Toronto"
+        />
+      </UnitContextProvider>
+    </main>
   );
 };
 

@@ -19,7 +19,13 @@ interface City {
 const citiesURL =
   "https://countriesnow.space/api/v0.1/countries/population/cities/filter";
 
-const SearchBar = ({ defaultValue }: { defaultValue?: string }) => {
+const SearchBar = ({
+  defaultValue,
+  onSubmit,
+}: {
+  defaultValue?: string;
+  onSubmit?: () => void;
+}) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [search, setSearch] = useState<string>(defaultValue ?? "");
@@ -40,6 +46,7 @@ const SearchBar = ({ defaultValue }: { defaultValue?: string }) => {
       });
       currentLocation.current = search;
       setViewSuggestions(false); // Hide suggestions after submitting
+      onSubmit?.();
     }
   };
 
@@ -136,11 +143,14 @@ const SearchBar = ({ defaultValue }: { defaultValue?: string }) => {
       {viewSuggestions && (
         <ul className="suggestions-list">
           {suggestions.map((suggestion, index) => (
-            <li key={index}>
+            <li key={index} className="suggestion-container">
               <button
+                className="suggestion"
                 onMouseDown={() => handleSuggestionClick(suggestion.name)}
               >
-                {suggestion.name}, {suggestion.country}
+                <p>
+                  {suggestion.name}, {suggestion.country}
+                </p>
               </button>
             </li>
           ))}

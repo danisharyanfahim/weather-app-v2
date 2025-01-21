@@ -1,0 +1,201 @@
+$toggleWidth: 60px;
+$toggleBorder: 2px;
+$toggleHeight: 25px;
+$navbarHeight: 5rem;
+
+#navbar,
+.side-nav {
+  z-index: 1000;
+  position: fixed;
+}
+
+#navbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  height: $navbarHeight;
+  background-color: white;
+  top: 0rem;
+  box-shadow: 0px 0px 5px 0px rgba(0 0 0 / 0.2);
+
+  h1.logo {
+    padding-left: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    .icon {
+      font-size: 2.5rem;
+      top: 5px;
+    }
+    .text {
+      font-size: 2rem;
+    }
+  }
+
+  .right-side {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .nav-menu-button {
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+  }
+
+  .nav-menu-button {
+    font-size: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.side-nav {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(20px);
+  height: 100dvh;
+  left: 100vw;
+  transition: left 0.5s ease;
+  top: $navbarHeight;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 5rem;
+
+  .search-wrapper {
+    max-width: 300px;
+
+    .search-bar-container,
+    .suggestions-list {
+      background-color: rgba(234, 236, 245, 0.301);
+      color: white;
+    }
+
+    .suggestions-list {
+      max-height: 40rem;
+      overflow-y: auto;
+    }
+
+    .suggestions-list .suggestion-container .suggestion {
+      color: white;
+    }
+
+    .search-bar-container {
+      .search-bar::placeholder,
+      .search-bar,
+      .search-button p {
+        color: white;
+      }
+    }
+  }
+
+  &.showing {
+    left: 0rem;
+  }
+}
+
+.toggle-container {
+  flex: 0 0 $toggleWidth;
+  border-radius: 100px;
+  width: $toggleWidth;
+  height: $toggleHeight;
+  background: linear-gradient(90deg, blue, red);
+  background-size: 200%;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
+  margin: 0.25rem;
+  box-shadow: 0px 0px 10px 0px rgba(4, 17, 138, 0.144);
+  background-clip: padding-box;
+  // border: solid transparent $toggleBorder;
+  cursor: pointer;
+
+  &.metric {
+    animation: shiftBackgroundLeft 0.2s ease forwards;
+  }
+
+  &.imperial {
+    animation: shiftBackgroundRight 0.2s ease forwards;
+  }
+
+  .toggle-button {
+    border-radius: 50%;
+    background: linear-gradient(0deg, white, rgb(237, 239, 243));
+    height: $toggleHeight - 5px;
+    width: $toggleHeight - 5px;
+    padding: 0.5rem;
+    position: absolute;
+    top: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.metric {
+      color: rgb(154, 164, 172);
+      left: 3px;
+      animation: slideLeft 0.2s ease;
+    }
+
+    &.imperial {
+      color: rgb(127, 127, 151);
+      left: $toggleWidth - $toggleHeight + 2px;
+      animation: slideRight 0.2s ease;
+    }
+
+    .toggle-icon {
+      font-size: 0.95rem;
+      top: 1px;
+      z-index: 2;
+    }
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    left: $toggleWidth - $toggleHeight + 2px;
+  }
+  to {
+    left: 3px;
+  }
+}
+
+@keyframes slideRight {
+  from {
+    left: 3px;
+  }
+  to {
+    left: $toggleWidth - $toggleHeight + 2px;
+  }
+}
+
+@keyframes shiftBackgroundLeft {
+  from {
+    background-position-x: 10%;
+  }
+  to {
+    background-position-x: 80%;
+  }
+}
+
+@keyframes shiftBackgroundRight {
+  from {
+    background-position-x: 80%;
+  }
+  to {
+    background-position-x: 10%;
+  }
+}
+
+@media (max-width: 425px) {
+  #navbar h1.logo .text {
+    display: none;
+  }
+}

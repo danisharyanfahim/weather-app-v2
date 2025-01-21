@@ -157,17 +157,6 @@ const WeatherDashboard = ({
       className="weather-dashboard"
       style={{ "--hourly-section-width": hourlySectionWidth + "px" }}
     >
-      <div className="top">
-        <h1>
-          <SiAccuweather />
-          Weather Dashboard
-        </h1>
-        <SearchBar />
-        <Toggle
-          option1={{ name: "Celsius", value: "metric" }}
-          option2={{ name: "Fahrenheit", value: "imperial" }}
-        />
-      </div>
       {!loading ? (
         weatherData ? (
           <div className="weather-data-container">
@@ -183,9 +172,11 @@ const WeatherDashboard = ({
           <h2>No Results</h2>
         )
       ) : (
-        <h2 className="loading-icon-container">
-          <AiOutlineLoading3Quarters id="loading-icon" />
-        </h2>
+        <div className="loading-container">
+          <h2 className="loading-icon-container">
+            <AiOutlineLoading3Quarters id="loading-icon" />
+          </h2>
+        </div>
       )}
     </div>
   );
