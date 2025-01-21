@@ -16,7 +16,7 @@ const Navbar = () => {
             <TiWeatherPartlySunny />
           </span>
           <span className="text">
-            Weather <span className="colored">App</span>
+            Weather<span className="colored">App</span>
           </span>
         </h1>
         <div className="right-side">
