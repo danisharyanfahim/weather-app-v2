@@ -1,0 +1,41 @@
+/*spin clockwise*/
+@keyframes spinClockwise {
+  0% {
+    transform: rotateZ(0deg);
+  }
+
+  50% {
+    transform: rotateZ(180deg);
+  }
+
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+}
+
+@keyframes shiftBackgroundLeft {
+  from {
+    background-position-x: 10%;
+  }
+  to {
+    background-position-x: 80%;
+  }
+}
+
+@keyframes shiftBackgroundRight {
+  from {
+    background-position-x: 80%;
+  }
+  to {
+    background-position-x: 10%;
+  }
+}

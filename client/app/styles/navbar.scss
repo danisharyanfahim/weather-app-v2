@@ -14,7 +14,11 @@ $toggleGap: 4px;
   display: flex;
   justify-content: space-between;
   height: $navbarHeight;
-  background-color: white;
+  background: linear-gradient(
+    135deg,
+    var(--secondary-background-color-1),
+    var(--secondary-background-color-2)
+  );
   top: 0rem;
   box-shadow: 0px 0px 5px 0px rgba(0 0 0 / 0.2);
 
@@ -24,6 +28,8 @@ $toggleGap: 4px;
     gap: 0.5rem;
     justify-content: center;
     align-items: center;
+    color: var(--title-color);
+
     .icon {
       font-size: 2.5rem;
       top: 5px;
@@ -53,6 +59,7 @@ $toggleGap: 4px;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: var(--title-color);
   }
 }
 
@@ -75,7 +82,7 @@ $toggleGap: 4px;
 
     .search-bar-container,
     .suggestions-list {
-      background-color: rgba(234, 236, 245, 0.301);
+      background-color: var(--nav-menu-search-color);
       color: white;
     }
 
@@ -176,29 +183,5 @@ $toggleGap: 4px;
   }
   to {
     left: $toggleWidth - $toggleHeight + $toggleGap;
-  }
-}
-
-@keyframes shiftBackgroundLeft {
-  from {
-    background-position-x: 10%;
-  }
-  to {
-    background-position-x: 80%;
-  }
-}
-
-@keyframes shiftBackgroundRight {
-  from {
-    background-position-x: 80%;
-  }
-  to {
-    background-position-x: 10%;
-  }
-}
-
-@media (max-width: 425px) {
-  #navbar h1.logo .text {
-    display: none;
   }
 }

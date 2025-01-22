@@ -150,15 +150,7 @@ const WeatherDashboard = ({
 
   return (
     <div
-      className={`weather-dashboard ${
-        checkIfDay(
-          weatherData?.current.dt,
-          weatherData?.current.sunset,
-          weatherData?.current.sunrise
-        )
-          ? "day"
-          : "night"
-      }`}
+      className="weather-dashboard"
       style={{ "--hourly-section-width": hourlySectionWidth + "px" }}
     >
       {!loading ? (

@@ -1,30 +1,7 @@
-// @use "./graphs.scss";
-// @use "./weather-card.scss";
+@use "./variables.scss";
+@use "./fonts.scss";
+@use "./animations.scss";
 @use "./navbar.scss";
-
-@font-face {
-  font-family: paragraph;
-  src: url("/static/fonts/IBMPlexSans-Light.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: subtitle;
-  src: url("/static/fonts/IBMPlexSans-SemiBold.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: title;
-  src: url("/static/fonts/IBMPlexSans-Bold.ttf") format("truetype");
-}
-
-:root {
-  --line-graph-color: rgba(255, 255, 255, 0.5);
-  --text-color: white;
-  --background-color-1: rgba(238, 243, 250, 0.973);
-  --background-color-2: rgba(205, 217, 235, 0.692);
-  --card-color-1: rgba(2, 20, 43, 0.15);
-  --card-color-2: rgba(4, 26, 44, 0.05);
-}
 
 p,
 strong,
@@ -111,31 +88,83 @@ button {
   }
 }
 
-/*spin clockwise*/
-@keyframes spinClockwise {
-  0% {
-    transform: rotateZ(0deg);
+main {
+  height: 100%;
+  min-height: 100dvh;
+  padding-top: 6rem;
+  background: linear-gradient(-45deg, blue, rgb(0, 174, 255));
+  animation: fadeIn 0.8s ease-in;
+  &#clouds {
+    background: linear-gradient(-45deg, rgb(94, 102, 143), rgb(167, 178, 211));
+  }
+  &#rain,
+  &#drizzle {
+    background: linear-gradient(-45deg, rgb(63, 69, 99), rgb(116, 132, 177));
   }
 
-  50% {
-    transform: rotateZ(180deg);
+  &#thunderstorm {
+    background: linear-gradient(-45deg, rgb(7, 26, 109), rgb(2, 17, 43));
   }
 
-  100% {
-    transform: rotateZ(360deg);
+  &#snow {
+    background: linear-gradient(-45deg, rgb(74, 77, 231), rgb(166, 181, 247));
   }
-}
 
-.weather-data-container {
-  margin-top: 6rem;
-}
+  &#mist {
+    background: linear-gradient(
+      -45deg,
+      rgb(66, 99, 172),
+      rgb(74, 84, 126),
+      rgb(37, 41, 58)
+    );
+  }
 
-.weather-dashboard {
+  &#haze {
+    background: linear-gradient(-45deg, rgb(255, 174, 0), rgb(255, 244, 220));
+  }
+
   &.night {
+    background: linear-gradient(135deg, rgb(0, 5, 12), rgb(2, 9, 44));
+
+    &#clouds {
+      background: linear-gradient(-45deg, rgb(26, 31, 56), rgb(31, 36, 51));
+    }
+
+    &#rain,
+    &#drizzle {
+      background: linear-gradient(-45deg, rgb(26, 29, 36), rgb(28, 38, 63));
+    }
+
+    &#thunderstorm {
+      background: linear-gradient(-45deg, rgb(15, 5, 71), rgb(0, 6, 34));
+    }
+
+    &#snow {
+      background: linear-gradient(-45deg, rgb(21, 22, 68) rgb(32, 43, 90));
+    }
+
+    &#mist {
+      background: linear-gradient(
+        -45deg,
+        rgb(143, 28, 28),
+        rgb(74, 84, 126),
+        rgb(37, 41, 58)
+      );
+    }
+
+    &#haze {
+      background: linear-gradient(-45deg, rgb(22, 16, 1), rgb(54, 38, 3));
+    }
+
     --background-color-1: rgba(2, 7, 29, 0.897);
     --background-color-2: rgba(6, 17, 54, 0.76);
+    --secondary-background-color-1: rgb(2, 10, 27);
+    --secondary-background-color-2: rgb(3, 10, 31);
     --card-color-1: rgba(213, 223, 235, 0.1);
     --card-color-2: rgba(255, 255, 255, 0.05);
+    --title-color: white;
+    --header-search-color: rgb(6, 16, 49);
+    --nav-menu-search-color: rgba(61, 71, 117, 0.301);
   }
 }
 
@@ -146,6 +175,7 @@ button {
   max-width: 1000px;
   box-shadow: 0rem 0rem 10px 0rem rgba(0, 0, 0, 0.15);
   margin: 1rem clamp(1rem, -11.736rem + 45.283vw, 10rem);
+  animation: fadeIn 0.8s ease-in;
 }
 
 .main-container {
@@ -209,7 +239,6 @@ button {
   padding: 1rem;
 
   & > :nth-child(-n + 4) {
-    // Your styles for the first 4 elements
     aspect-ratio: 1 / 1;
     .icon {
       font-size: 2.5rem;
@@ -221,10 +250,6 @@ button {
 
     .info {
       font-size: 1.25rem;
-    }
-
-    .title {
-      font-size: 0.8rem;
     }
   }
 
@@ -469,6 +494,7 @@ button {
     #0000 0
   );
 }
+
 .compass-dial {
   display: flex;
   justify-content: center;
@@ -536,7 +562,7 @@ button {
   .search-bar-container {
     border-radius: 50px;
     display: flex;
-    background-color: rgb(232, 235, 245);
+    background-color: var(--header-search-color);
 
     .search-bar {
       padding: 0.5rem 0rem 0.5rem 1.25rem;
@@ -544,6 +570,7 @@ button {
       height: 2.5rem;
       background-color: transparent;
       font-size: 1.15rem;
+      color: var(--title-color);
 
       &::-webkit-search-cancel-button {
         -webkit-appearance: none;
@@ -573,7 +600,7 @@ button {
     }
   }
   .suggestions-list {
-    background-color: rgb(232, 235, 245);
+    background-color: var(--header-search-color);
     border-radius: 1rem;
     overflow: hidden;
     position: absolute;
@@ -599,6 +626,7 @@ button {
           font-size: 1.15rem;
           padding: 0.25rem 0rem;
           white-space: nowrap;
+          color: var(--title-color);
         }
       }
 
@@ -620,8 +648,8 @@ button {
 .header-container {
   display: flex;
   justify-content: center;
-  margin-top: 5rem;
 }
+
 .dashboard-header {
   width: 100%;
   display: flex;
@@ -631,7 +659,11 @@ button {
   max-width: 1000px;
   padding: 1rem;
   border-radius: 1rem;
-  background-color: white;
+  background: linear-gradient(
+    135deg,
+    var(--secondary-background-color-1),
+    var(--secondary-background-color-2)
+  );
   box-shadow: 0rem 0rem 10px 0rem rgba(0, 0, 0, 0.15);
 
   .right-side {
@@ -647,6 +679,7 @@ button {
     align-items: center;
     gap: 0.5rem;
     font-size: 2.5rem;
+    color: var(--title-color);
 
     .icon {
       top: 4px;
@@ -745,10 +778,13 @@ button {
   }
 }
 
-@media (min-width: 768px) {
-  .weather-data-container {
-    margin-top: 0rem;
+@media (max-width: 425px) {
+  #navbar h1.logo .text {
+    display: none;
   }
+}
+
+@media (min-width: 768px) {
   .main-container,
   .secondary-container,
   .hourly-forecast-container,
@@ -760,10 +796,105 @@ button {
     margin: 0rem 1rem;
   }
 
+  .main-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr auto; //First item in column takes up as much space as possible while the second one takes up the remaining space
+    min-height: 500px;
+
+    > * {
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: 0rem;
+      margin: 0rem;
+    }
+
+    :nth-child(1) {
+      order: 2;
+      align-items: flex-end;
+      grid-row: span 2;
+    }
+
+    :nth-child(3) {
+      order: 2;
+    }
+
+    .weather-container {
+      display: flex;
+      flex-direction: column-reverse;
+      font-size: 1.5rem;
+      padding-left: 1rem;
+      #weather-icon-current {
+        font-size: 8rem;
+      }
+      #weather-description {
+        font-size: 1.75rem;
+      }
+    }
+
+    .temp-container {
+      display: flex;
+      flex-direction: column-reverse;
+      padding-left: 1rem;
+      #main-temp {
+        font-size: 5.5rem;
+      }
+      #feels-like {
+        font-size: 1.75rem;
+      }
+    }
+    .info-container {
+      padding-right: 1rem;
+      justify-content: flex-end;
+
+      #current-location {
+        font-size: 1.45rem;
+      }
+
+      #current-time {
+        font-size: 2.5rem;
+      }
+
+      #current-date {
+        font-size: 1.75rem;
+      }
+    }
+  }
+
   .secondary-container {
     grid-template-columns: repeat(4, 1fr); // Creates two equal columns
     grid-auto-rows: 1fr; //Min height of 1 row for each item in the grid
     grid-template-rows: auto; // Rows will adjust based on content
+
+    & > :nth-child(-n + 4) {
+      .icon {
+        font-size: clamp(3rem, -6rem + 18.75vw, 6rem);
+      }
+
+      .info {
+        font-size: clamp(1.25rem, -0.25rem + 3.125vw, 1.75rem);
+      }
+
+      .title {
+        font-size: clamp(1rem, -0.05rem + 2.188vw, 1.35rem);
+      }
+    }
+
+    .title {
+      font-size: clamp(1rem, -0.05rem + 2.188vw, 1.35rem);
+    }
+
+    .info {
+      font-size: clamp(1.35rem, -0.6rem + 4.062vw, 2rem);
+
+      &.chemical {
+        font-size: clamp(1rem, -0.5rem + 3.125vw, 1.5rem);
+      }
+    }
+
+    .label {
+      font-size: clamp(1rem, -0.5rem + 3.125vw, 1.5rem);
+    }
 
     > * {
       grid-column: span 1;
@@ -779,6 +910,36 @@ button {
   .main-container,
   .secondary-container {
     margin: 1rem 0rem;
+
+    & > :nth-child(-n + 4) {
+      .icon {
+        font-size: 6rem;
+      }
+
+      .info {
+        font-size: 1.75rem;
+      }
+
+      .title {
+        font-size: 1.35rem;
+      }
+    }
+
+    .title {
+      font-size: 1.35rem;
+    }
+
+    .info {
+      font-size: 2rem;
+
+      &.chemical {
+        font-size: 1.5rem;
+      }
+    }
+
+    .label {
+      font-size: 1.5rem;
+    }
   }
 
   .hourly-forecast-container {

@@ -1,3 +1,4 @@
+"use client";
 import {
   formatCamelCase,
   formatDate,
@@ -6,15 +7,18 @@ import {
   getCurrentTime,
   removeAfterHyphen,
 } from "@/app/utils/utility-functions";
-import React from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { ImLocation } from "react-icons/im";
 import { PiSunglassesFill } from "react-icons/pi";
 import { TbBinocularsFilled, TbSunMoon } from "react-icons/tb";
-import { selectWeatherIcon } from "./weather-dashboard";
+import { checkIfDay, selectWeatherIcon } from "./weather-dashboard";
 import { GiSunrise, GiSunset, GiWaterDrop } from "react-icons/gi";
 import { LuWind } from "react-icons/lu";
 import { MdAir } from "react-icons/md";
 import { IoTriangleSharp } from "react-icons/io5";
+import { WeatherContext } from "@/app/context/weather-provider";
+import { PeriodContext } from "@/app/context/period-provider";
+import { PeriodType } from "@/app/types/types";
 
 const CurrentCard = ({
   weatherData,
@@ -36,6 +40,9 @@ const CurrentCard = ({
     speedMultiplier,
     distanceUnit,
   } = units;
+  const { setWeather } = useContext(WeatherContext);
+  const { period, setPeriod } = useContext(PeriodContext);
+  const dayRef = useRef<PeriodType>(period);
 
   // const convertUVI = (uvi: number): string => {
   //   if (uvi <= 2) {
@@ -57,6 +64,25 @@ const CurrentCard = ({
   //   if (value >= 180) value = 180;
   //   return value * interval;
   // };
+
+  useEffect(() => {
+    const newPeriod = checkIfDay(
+      weatherData?.current.dt,
+      weatherData?.current.sunset,
+      weatherData?.current.sunrise
+    )
+      ? "day"
+      : "night";
+
+    if (dayRef.current !== newPeriod) {
+      setPeriod(newPeriod);
+      dayRef.current = newPeriod;
+    }
+  }, [weatherData]);
+
+  useEffect(() => {
+    setWeather(weatherData?.current.weather[0].main.toLowerCase());
+  }, [weatherData?.current.weather[0].main]);
 
   //Formats chemical formula into HTML subscript format using regex
   const formatChemicalFormula = (formula: string) => {
@@ -106,7 +132,9 @@ const CurrentCard = ({
               weatherData?.current.sunrise
             )}
           </div>
-          <p>{formatCamelCase(weatherData?.current.weather[0].description)}</p>
+          <p id="weather-description">
+            {formatCamelCase(weatherData?.current.weather[0].description)}
+          </p>
         </div>
         <div className="temp-container">
           <h4 id="main-temp">
@@ -180,7 +208,7 @@ const CurrentCard = ({
             <IoTriangleSharp className="arrow" />
             <div className="ring"></div>
           </div>
-          <p>
+          <p className="info">
             {Math.round(weatherData?.current.wind_speed * speedMultiplier)}{" "}
             {speedUnit}
           </p>
@@ -202,8 +230,10 @@ const CurrentCard = ({
           <div className="aqi-data-container">
             {Object.keys(weatherData?.list[0].components).map((key) => (
               <div key={key} className="chemical-info-container">
-                <strong>{weatherData?.list[0].components[key]}</strong>
-                <p>
+                <strong className="chemical info">
+                  {weatherData?.list[0].components[key]}
+                </strong>
+                <p className="label">
                   {formatChemicalFormula(removeAfterHyphen(key.toUpperCase()))}
                 </p>
               </div>

@@ -1,26 +1,23 @@
 import React from "react";
-import WeatherDashboard from "./components/weather-dashboard/weather-dashboard";
-import Header from "./components/header";
-import UnitContextProvider from "./context/unit-provider";
+import WeatherApp from "./components/weather-app";
+import WeatherContextProvider from "./context/weather-provider";
+import PeriodContextProvider from "./context/period-provider";
 
-const WeatherApp = async ({
+const WeatherPage = async ({
   searchParams,
 }: {
   searchParams: Promise<{ location: string; units: string }>;
 }) => {
   const { location, units } = await searchParams;
   return (
-    <main className="weather-app">
-      <UnitContextProvider>
-        <Header />
-        <WeatherDashboard
-          location={location ?? "toronto"}
-          units={units ?? "metric"}
-          defaultLocation="Toronto"
-        />
-      </UnitContextProvider>
-    </main>
+    <div className="weather-app-container">
+      <WeatherContextProvider>
+        <PeriodContextProvider>
+          <WeatherApp units={units} location={location} />
+        </PeriodContextProvider>
+      </WeatherContextProvider>
+    </div>
   );
 };
 
-export default WeatherApp;
+export default WeatherPage;

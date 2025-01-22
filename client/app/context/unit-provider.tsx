@@ -1,9 +1,10 @@
 "use client";
 import React, { createContext, useState } from "react";
+import { UnitsType } from "../types/types";
 
 export interface UnitContextType {
-  units: "metric" | "imperial";
-  setUnits: React.Dispatch<React.SetStateAction<"metric" | "imperial">>;
+  units: UnitsType;
+  setUnits: React.Dispatch<React.SetStateAction<UnitsType>>;
 }
 
 export const UnitContext = createContext<UnitContextType>({
@@ -12,7 +13,7 @@ export const UnitContext = createContext<UnitContextType>({
 });
 
 const UnitContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [units, setUnits] = useState<"metric" | "imperial">("metric");
+  const [units, setUnits] = useState<UnitsType>("metric");
   const value = { units, setUnits };
 
   return <UnitContext.Provider value={value}>{children}</UnitContext.Provider>;
