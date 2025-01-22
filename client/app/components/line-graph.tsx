@@ -60,7 +60,7 @@ const LineGraph = ({
               cx={x}
               cy={y}
               r={3} // Radius of the circle
-              fill="white" // Fill color for the circles
+              fill="var(--text-color)" // Fill color for the circles
               stroke="var(--line-graph-color)"
               strokeWidth="1"
             />

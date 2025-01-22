@@ -1,11 +1,9 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import SearchBar from "./search-bar";
-import { SiAccuweather } from "react-icons/si";
 import Toggle from "./toggle";
 import { useMediaQueries } from "../hooks/useMediaQueries";
 import Navbar from "./navbar";
-import { UnitContext, UnitContextType } from "../context/unit-provider";
 import { TiWeatherPartlySunny } from "react-icons/ti";
 
 const Header = () => {

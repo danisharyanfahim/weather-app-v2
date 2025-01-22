@@ -1,16 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import SearchBar from "../search-bar";
-import Toggle from "../toggle";
-import {
-  formatCamelCase,
-  formatDate,
-  formatStringToPath,
-  formatTime,
-  formatTimeDuration,
-  getCurrentTime,
-  getDay,
-} from "../../utils/utility-functions";
+import { formatStringToPath } from "../../utils/utility-functions";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaCloudMoonRain } from "react-icons/fa";
 import { IoMdCloudyNight } from "react-icons/io";
@@ -23,23 +13,19 @@ import {
   WiNightAltSnowWind,
   WiNightAltThunderstorm,
   WiNightFog,
-  WiRaindrops,
 } from "react-icons/wi";
-import { GiSnowflake2, GiSunrise, GiSunset, GiWaterDrop } from "react-icons/gi";
-import LineGraph from "../line-graph";
-import { SiAccuweather } from "react-icons/si";
-import { ImLocation } from "react-icons/im";
-import { LuWind } from "react-icons/lu";
-import { MdAir } from "react-icons/md";
-import {
-  TbBinocularsFilled,
-  TbDropletsFilled,
-  TbSunMoon,
-} from "react-icons/tb";
-import { PiSunglassesFill } from "react-icons/pi";
+import { GiSnowflake2 } from "react-icons/gi";
 import CurrentCard from "./current-card";
 import HourlyCard from "./hourly-card";
 import DailyCard from "./daily-card";
+
+export const checkIfDay = (
+  dt: number,
+  sunset: number,
+  sunrise: number
+): boolean => {
+  return dt > sunrise && dt < sunset;
+};
 
 export const selectWeatherIcon = (
   weatherType: string,
@@ -50,51 +36,61 @@ export const selectWeatherIcon = (
 ): React.ReactNode => {
   weatherType = weatherType.toLowerCase();
   if (weatherType === "clear") {
-    if (dt > sunrise && dt < sunset) {
-      return <IoSunny />;
-    } else {
-      return showNightIcons ? <IoMoonSharp /> : <IoSunny />;
-    }
+    return checkIfDay(dt, sunset, sunrise) ? (
+      <IoSunny />
+    ) : showNightIcons ? (
+      <IoMoonSharp />
+    ) : (
+      <IoSunny />
+    );
   } else if (weatherType === "clouds") {
-    if (dt > sunrise && dt < sunset) {
-      return <BsCloudsFill />;
-    } else {
-      return showNightIcons ? <IoMdCloudyNight /> : <BsCloudsFill />;
-    }
+    return checkIfDay(dt, sunset, sunrise) ? (
+      <BsCloudsFill />
+    ) : showNightIcons ? (
+      <IoMdCloudyNight />
+    ) : (
+      <BsCloudsFill />
+    );
   } else if (weatherType === "rain" || weatherType === "drizzle") {
-    if (dt > sunrise && dt < sunset) {
-      return <IoRainy />;
-    } else {
-      return showNightIcons ? <FaCloudMoonRain /> : <IoRainy />;
-    }
+    return checkIfDay(dt, sunset, sunrise) ? (
+      <IoRainy />
+    ) : showNightIcons ? (
+      <FaCloudMoonRain />
+    ) : (
+      <IoRainy />
+    );
   } else if (weatherType === "thunderstorm") {
-    if (dt > sunrise && dt < sunset) {
-      return <WiDayThunderstorm />;
-    } else {
-      return showNightIcons ? (
-        <WiNightAltThunderstorm />
-      ) : (
-        <WiDayThunderstorm />
-      );
-    }
+    return checkIfDay(dt, sunset, sunrise) ? (
+      <WiDayThunderstorm />
+    ) : showNightIcons ? (
+      <WiNightAltThunderstorm />
+    ) : (
+      <WiDayThunderstorm />
+    );
   } else if (weatherType === "mist") {
-    if (dt > sunrise && dt < sunset) {
-      return <WiFog />;
-    } else {
-      return showNightIcons ? <WiNightFog /> : <WiFog />;
-    }
+    return checkIfDay(dt, sunset, sunrise) ? (
+      <WiFog />
+    ) : showNightIcons ? (
+      <WiNightFog />
+    ) : (
+      <WiFog />
+    );
   } else if (weatherType === "snow") {
-    if (dt > sunrise && dt < sunset) {
-      return <GiSnowflake2 />;
-    } else {
-      return showNightIcons ? <WiNightAltSnowWind /> : <GiSnowflake2 />;
-    }
+    return checkIfDay(dt, sunset, sunrise) ? (
+      <GiSnowflake2 />
+    ) : showNightIcons ? (
+      <WiNightAltSnowWind />
+    ) : (
+      <GiSnowflake2 />
+    );
   } else if (weatherType === "haze" || weatherType === "smoke") {
-    if (dt > sunrise && dt < sunset) {
-      return <WiDayHaze />;
-    } else {
-      return showNightIcons ? <BsCloudFog2Fill /> : <WiDayHaze />;
-    }
+    return checkIfDay(dt, sunset, sunrise) ? (
+      <WiDayHaze />
+    ) : showNightIcons ? (
+      <BsCloudFog2Fill />
+    ) : (
+      <WiDayHaze />
+    );
   }
 };
 
@@ -154,7 +150,15 @@ const WeatherDashboard = ({
 
   return (
     <div
-      className="weather-dashboard"
+      className={`weather-dashboard ${
+        checkIfDay(
+          weatherData?.current.dt,
+          weatherData?.current.sunset,
+          weatherData?.current.sunrise
+        )
+          ? "day"
+          : "night"
+      }`}
       style={{ "--hourly-section-width": hourlySectionWidth + "px" }}
     >
       {!loading ? (
@@ -169,7 +173,9 @@ const WeatherDashboard = ({
             <DailyCard weatherData={weatherData} />
           </div>
         ) : (
-          <h2>No Results</h2>
+          <div className="no-results-container">
+            <h2>No Results</h2>
+          </div>
         )
       ) : (
         <div className="loading-container">

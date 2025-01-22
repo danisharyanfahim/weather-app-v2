@@ -1,8 +1,8 @@
 $toggleWidth: 60px;
 $toggleBorder: 2px;
-$toggleHeight: 25px;
+$toggleHeight: 24px;
 $navbarHeight: 5rem;
-
+$toggleGap: 4px;
 #navbar,
 .side-nav {
   z-index: 1000;
@@ -129,25 +129,28 @@ $navbarHeight: 5rem;
   .toggle-button {
     border-radius: 50%;
     background: linear-gradient(0deg, white, rgb(237, 239, 243));
-    height: $toggleHeight - 5px;
-    width: $toggleHeight - 5px;
-    padding: 0.5rem;
+    height: calc($toggleHeight - $toggleGap);
+    width: calc($toggleHeight - $toggleGap);
+    // padding: 0.5rem;
     position: absolute;
-    top: 2px;
     display: flex;
     justify-content: center;
     align-items: center;
 
     &.metric {
       color: rgb(154, 164, 172);
-      left: 3px;
+      left: $toggleGap/2;
       animation: slideLeft 0.2s ease;
     }
 
     &.imperial {
       color: rgb(127, 127, 151);
-      left: $toggleWidth - $toggleHeight + 2px;
+      left: $toggleWidth - $toggleHeight + $toggleGap/2;
       animation: slideRight 0.2s ease;
+
+      .toggle-icon {
+        left: 1px;
+      }
     }
 
     .toggle-icon {
@@ -160,19 +163,19 @@ $navbarHeight: 5rem;
 
 @keyframes slideLeft {
   from {
-    left: $toggleWidth - $toggleHeight + 2px;
+    left: $toggleWidth - $toggleHeight + $toggleGap;
   }
   to {
-    left: 3px;
+    left: $toggleGap;
   }
 }
 
 @keyframes slideRight {
   from {
-    left: 3px;
+    left: $toggleGap;
   }
   to {
-    left: $toggleWidth - $toggleHeight + 2px;
+    left: $toggleWidth - $toggleHeight + $toggleGap;
   }
 }
 

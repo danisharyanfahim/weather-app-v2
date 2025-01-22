@@ -14,8 +14,8 @@ const WeatherApp = async ({
       <UnitContextProvider>
         <Header />
         <WeatherDashboard
-          location={location}
-          units={units}
+          location={location ?? "toronto"}
+          units={units ?? "metric"}
           defaultLocation="Toronto"
         />
       </UnitContextProvider>
