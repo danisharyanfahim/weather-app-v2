@@ -53,9 +53,9 @@ const HourlyCard = ({
     const interval = setInterval(() => {
       if (scrolling) {
         if (directionRef.current === "left") {
-          scrollCarousel(-10);
+          scrollCarousel(-5);
         } else {
-          scrollCarousel(10);
+          scrollCarousel(5);
         }
       }
     }, 1);
